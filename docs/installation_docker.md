@@ -1,5 +1,28 @@
 # Installation of loklak with Docker
 
+Docker is a way to move applications including the operating system to servers.
+
+## Get a loklak Docker image
+
+Each of the following sections depend on a docker image with a loklak server inside.
+This section shows you how to get such an image.
+Some possibilities may be used in the sections but you can mey be able to exchenge them.
+
+- pull a docker image from [dockerhub](https://hub.docker.com/r/mariobehling/loklak/):
+
+        docker pull mariobehling/loklak
+
+- clone the repository and build the image from source
+
+        git clone https://github.com/loklak/loklak_server.git
+        cd loklak_server
+        docker build -t mariobehling/loklak docker
+
+- build the repository from the git URL
+
+        docker build https://github.com/loklak/loklak_server.git#development:docker
+
+
 ## Installing loklak on Bluemix with Docker
 
 1. Install docker on your system
@@ -158,16 +181,15 @@ sudo fallocate -l 4G /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-sudo docker build https://github.com/loklak/loklak_server.git
+sudo docker pull mariobehling/loklak
 ```
 
-Once finished, the last line will provide the image ID, like ```Successfully built 4e11208a7b34```. Copy or remember this id, we will need this id to tag the image.
-Tag your image by entering ```sudo docker tag YOUR_IMAGE_ID loklak```. In my case, we enter ```sudo docker tag 4e11208a7b34 loklak```
+Once finished, you will get fully working image. You can check if it exists by entering ```sudo docker images```.
 Run our server by entering:
 ```
-sudo docker run -d -p 80:80 -p 443:443 loklak
+sudo docker run -d -p 80:80 -p 443:443 mariobehling/loklak
 ```
-Enter your assigned IP address into your browser to check if it is working.
+Enter your assigned HTTP IP address into your browser to check if it is working.
 
 ## Installing loklak on DigitalOcean with Docker
 
